@@ -8,15 +8,17 @@ import AddProfil from "@/components/AddProfil"
 //Export default tuh cuman boleh sekali doang // oh emg iya?
 export default function Home() {
   return (
-  <div>
-    <Navbar/>
-        <div className="table-container"> 
-        </div>
-    <Footer/>
-    {/* <Table/> */}
-    {/* <Dashboard/> */}
-    <AddProfil/>
-    <Tableameng/>
-  </div>
+    <div>
+      <Navbar />
+      <div className="table-container ">
+      </div>
+      <Footer />
+      {/* <Table/> */}
+      {/* <Dashboard/> */}
+      <div className="container mx-auto ">
+        <AddProfil/>
+        <Tableameng />
+      </div>
+    </div>
   );
 }

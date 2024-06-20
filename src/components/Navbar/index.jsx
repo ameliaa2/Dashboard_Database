@@ -1,6 +1,6 @@
 const Navbar = async ()=>{
     return(
-        <div className="w-full bg-white shadow-md z-10">
+        <div className="w-full bg-[#A0937D] shadow-md z-10">
             <div className="container mx-auto flex items-center justify-center py-4">
                 <input
                 type="text"

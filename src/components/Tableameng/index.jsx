@@ -85,7 +85,7 @@ const Tableameng=()=> {
   }, [selectedUser])
 
   return (
-    <div className="container mx-auto">
+    <>
       <Table className="table-striped" aria-label="Example table with dynamic content">
         <TableHeader columns={columns}>
           {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -127,16 +127,15 @@ const Tableameng=()=> {
           )}
         </TableBody>
       </Table>
-
-      {selectedUser && (
-        <div style={{ marginTop: '20px' }}>
-          <h2>Profile Details</h2>
-          <p><strong>Name:</strong> {selectedUser.name}</p>
-          <p><strong>Role:</strong> {selectedUser.role}</p>
-          <p><strong>Status:</strong> {selectedUser.status}</p>
-        </div>
-      )}
-    </div>
+      </>
+      // {selectedUser && (
+      //   <div style={{ marginTop: '20px' }}>
+      //     <h2>Profile Details</h2>
+      //     <p><strong>Name:</strong> {selectedUser.name}</p>
+      //     <p><strong>Role:</strong> {selectedUser.role}</p>
+      //     <p><strong>Status:</strong> {selectedUser.status}</p>
+      //   </div>
+      // )}
   );
 }
 export default Tableameng
