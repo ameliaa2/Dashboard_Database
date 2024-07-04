@@ -77,7 +77,7 @@ const AddAdmin = () => {
         </button>
       </div>
       {openModal && ( // Tampilkan modal jika openModal true
-        <div className="z-20 min-w-[100vw] fixed top-0 left-0 right-0 min-h-screen flex items-center justify-center  bg-white/50 backdrop-blur-md">
+        <div className="z-20 min-w-[100vw] fixed top-0 left-0 right-0 min-h-screen flex items-center justify-center  bg-gray-500/30 backdrop-blur-md">
           <div className="addprofil-form bg-white p-6 rounded-lg shadow-xl">
             <div className="flex justify-end">
               <button onClick={handleCloseModal}>

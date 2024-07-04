@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.2",
-    "@nextui-org/table": "^2.0.35",
+    "@nextui-org/table": "^2.0.36",
     "@phosphor-icons/react": "^2.1.6",
+    "chart.js": "^4.4.3",
     "create-react-app": "^1.2.1",
-    "lucide-react": "^0.395.0",
+    "lucide-react": "^0.399.0",
     "next": "^14.2.4",
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-modal": "^3.16.1"
   },

@@ -2,8 +2,12 @@
 import React, { useState } from 'react';
 import Link from "next/link"
 import Modal from 'react-modal';
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3153789399.
+import UpdateFile from '@/components/UpdateFile'
+import Navbar from '@/components/Navbar'
 
-const DataProfile = () => {
+const UpdateProfile = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isKtpOpen, setIsKtpOpen] = useState(true);
   const [isIjazahOpen, setIsIjazahOpen] = useState(false);
@@ -24,31 +28,6 @@ const DataProfile = () => {
     setIsIjazahOpen(false)
     setIsLicenseOpen(true)
   }
-
-  //    const handleOpenPdf = (pdf) => {
-  //      setDocs([{ uri: pdf }]);
-  //      setIsModalOpen(true);
-  //    };
-  // const handleOpenPdf = (pdf) => {
-  //   let pdfUrl;
-  //   switch (pdf) {
-  //     case 'ktp':
-  //       pdfUrl = KTP;
-  //       break;
-  //     case 'ijazah':
-  //       pdfUrl = Ijazah;
-  //       break;
-  //     case 'lisensi':
-  //       pdfUrl = Lisensi;
-  //       break;
-  //     default:
-  //       pdfUrl = '';
-  //   }
-
-  //   //  setDocs([{ uri: pdfUrl }]);
-  //   // setIsModalOpen(true);
-  // };
-
   const handleOpenPdf = (docType) => {
     let pdfUrl;
     switch (docType) {
@@ -75,24 +54,7 @@ const DataProfile = () => {
     setIsModalOpen(false);
     setSelectedDoc(null); // Clear selected document
   };
-
-  //  const handleOpenInNewTab = () => {
-  //    let pdfUrl;
-  //    switch (docs[0].uri) {
-  //      case KTP:
-  //        pdfUrl = KTP;
-  //        break;
-  //      case Ijazah:
-  //        pdfUrl = Ijazah;
-  //        break;
-  //      case Lisensi:
-  //        pdfUrl = Lisensi;
-  //        break;
-  //      default:
-  //        pdfUrl = '';
-  //    }
-  //    window.open(pdfUrl, '_blank');
-  //  };
+  
   const handleOpenInNewTab = () => {
     if (selectedDoc) {
       window.open(selectedDoc.uri, '_blank');
@@ -100,14 +62,14 @@ const DataProfile = () => {
       console.error('No document selected to open.'); // Handle no selected document
     }
   };
-
-
   return (
     <div className="w-full flex justify-center min-h-[90vh] py-10 bg-[#A0937D]">
       <div className="flex flex-row flex-wrap rounded-lg shadow-md w-3/4 gap-x-3 gap-y-3">
         <div className="data-profile flex flex-col items-center p-6 bg-[#E7D4B5] rounded-lg border-r border-gray-300 lg:w-1/4 md:w-4/4">
           <div className="photo w-48 h-48 bg-[#B6C7AA] rounded-md flex justify-center items-center mb-2">
-            <div className="foto text-lg font-bold">FOTO</div>
+            {/* <img scr ="/assets/pdf/foto/Pas Foto - Fathuddien Arief.pdf" alt="foto" width="100%" /> */}
+            <iframe src="/assets/pdf/foto/Pas Foto - Fathuddien Arief.pdf" className=" overflow-y-hidden" frameborder="0" width="100%"></iframe>
+          {/* <div className="foto text-lg font-bold">FOTO</div> */}
           </div>
           <div className="name text-lg font-bold">Nama</div>
           <div className="name-id text-lg font-bold">ID</div>
@@ -135,11 +97,13 @@ const DataProfile = () => {
           </div>
           {isKtpOpen &&
             <div classnaame="z-20">
+              <UpdateFile />
               <iframe src="/assets/pdf/ktp/KTP - Fathuddien Arief.pdf" height="400" width="100%" className='rounded-lg' />
             </div>
           }
           {isIjazahOpen &&
             <div classnaame="z-20">
+              <UpdateFile />
               <iframe src="/assets/pdf/ijazah/Ijazah-FathuddienArief.pdf" height="400" width="100%" className='rounded-lg' />
             </div>
           }
@@ -147,12 +111,12 @@ const DataProfile = () => {
             <div className='text-black'>
               <ol className='list-decimal'>
                 <li className='flex justify-between'>
-                    <p>Web Developer</p>
+                  <p>Web Developer</p>
                   <Link href="/profile/sadfasd/license">View License</Link>
                 </li>
                 <li className='flex justify-between'>
-                    <p>Mobile Developer</p>
-                    <Link href="/profile/sadfasd/license">View License</Link>
+                  <p>Mobile Developer</p>
+                  <Link href="/profile/sadfasd/license">View License</Link>
                 </li>
               </ol>
             </div>
@@ -178,53 +142,4 @@ const DataProfile = () => {
   );
 };
 
-export default DataProfile;
-{/* <Modal
-            isOpen={isModalOpen}
-            onRequestClose={handleCloseModal}
-            contentLabel="PDF Viewer"
-            className="Modal"
-            overlayClassName="Overlay"
-          >
-            <div className="flex flex-col items-center justify-center h-full">
-              <button
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4"
-                onClick={handleCloseModal}
-              >
-                Close
-              </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={handleOpenInNewTab}
-              >
-                Open in New Tab
-              </button>
-            </div>
-          </Modal> */}
-{/* Modal for displaying PDF */ }
-//const DataProfile = () => {
-//  const [isModalOpen, setIsModalOpen] = useState(false);
-//  const [pdfUrl, setPdfUrl] = useState('');
-// const [docs, setDocs] = useState([]);
-//  const docs = [
-// { uri: "https://url-to-my-pdf.pdf" }, // Remote file
-//    { uri: require("@/assets/pdf/ijazah/Ijazah-FathuddienArief.pdf")} // Local File
-// { uri: require("./Ijazah-FathuddienArief.pdf")} // Local File
-//  ];
-// const handleOpenPdf = (url) => {
-//   if (url.startsWith('http')) {
-//     setDocs([{ uri: url }]);
-//   } else {
-//     setDocs([{ uri: `/pdf/${url}` }]);
-//   }
-//   setIsModalOpen(true);
-// };
-
-// const handleCloseModal = () => {
-//   setIsModalOpen(false);
-// };
-
-// const handleDownloadPdf = () => {
-//   window.open(pdfUrl, '_blank');
-//   setIsModalOpen(false);
-// };
+export default UpdateProfile;    

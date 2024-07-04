@@ -59,7 +59,7 @@ export default function ActionDropdown() {
         <DropdownItem key="profile" href="/profile/sdafasd">
           View Profile
         </DropdownItem>
-        <DropdownItem className="pt-2" key="about" href="/update">
+        <DropdownItem className="pt-2" key="update" href="/update">
           Update Profile
         </DropdownItem>
       </DropdownMenu>
