@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 // import Dashboard from "@/components/Dashboard"
 import Tableameng from "@/components/Tableameng";
 import AddProfil from "@/components/AddProfil"
-//Export default tuh cuman boleh sekali doang // oh emg iya?
 export default function Home() {
   return (
     <div>

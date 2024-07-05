@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { Users, Files, Images, GraduationCap } from "lucide-react"
 import Card from "@/components/Card"
 import PieChart from "@/components/PieChart"
+import {Pagination} from "@nextui-org/react"
 import { fetchCountUsers, fetchCountIjazah, fetchCountKtp, fetchCountLicense, fetchGetLabel } from "@/helpers/api"
 const ContentDashboard = () => {
     const [userValue, setUserValue] = useState(0)
@@ -17,13 +18,9 @@ const ContentDashboard = () => {
             const dataLicense = await fetchCountLicense()
             const dataIjazah = await fetchCountIjazah()
             const dataKtp = await fetchCountKtp()
-            const response = await fetchGetLabel()
-            if (response.ok){
-                const data =await response.json()
-                console.log('ini data:' + data)
-                setLabel(data.label)
-                setValue(data.values)
-            }
+            const dataPieChart = await fetchGetLabel()
+            setLabel(dataPieChart.label)
+            setValue(dataPieChart.values)
             setUserValue(dataUsers)
             setIjazahValue(dataIjazah)
             setLicenseValue(dataLicense)
@@ -44,6 +41,9 @@ const ContentDashboard = () => {
                 <div className="py-5 flex items-center justify-center">
                     <PieChart label={label} value={value} />
                 </div>
+            </div>
+            <div className='w-full flex justify-center shadow-xl  mt-3 py-5'>
+            <Pagination isCompact showControls total={10} initialPage={1} size="lg" />
             </div>
         </main>
     )
