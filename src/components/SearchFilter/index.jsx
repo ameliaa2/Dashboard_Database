@@ -67,7 +67,7 @@ const SearchFilter = () => {
   };
 
   return (
-    <div className="bg-gray-300 min-h-screen pt-8">
+    <div className="bg-gray-300">
       <h2 className="text-xl font-bold py-3 px-5 text-white bg-gray-500 rounded-t-lg">Search by</h2>
       <div className="bg-white shadow-md rounded-b-lg p-6 w-full">
         <div className="grid grid-cols-4 gap-4">
