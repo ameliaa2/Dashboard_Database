@@ -1,6 +1,9 @@
+"use client"
 //import Image from "next/image";
-import Navbar from "@/components/Navbar";
-
+import NavbarZaky from "@/components/NavbarZaky";
+import Aside from "@/components/Aside";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 //Export default tuh cuman boleh sekali doang
 //export default function User() {
 //  return (
@@ -11,13 +14,48 @@ import Navbar from "@/components/Navbar";
 //  );
 // }
 import React from 'react';
-import DataProfile from '@/app/profile/[iduser]/DataProfile';
+import DataProfile from '@/components/DataProfile';
+// import DataProfile from '@/app/profile/[iduser]/DataProfile';
+import { getDetailUser } from "@/helpers/api";
 
 const Home = () => {
+  // const router = useRouter()
+  const cek = usePathname()
+  const id = cek.split('/').pop()
+  // const iduser = searchParams.query 
+
+  const [idUser, setIdUser] = useState('')
+  const [dataUser, setDataUser] = useState([])
+  const [isAsideVisible, setAsideVisible]= useState(false)
+  const handleVisibleAside= ()=>{
+      setAsideVisible(true)
+      if(isAsideVisible){
+          setAsideVisible(false)            
+      }
+  }
+  useEffect(() => {
+    setIdUser(id)
+    const fetchData = async () => {
+      const data = await getDetailUser(id)
+      setDataUser(data)
+    }
+    fetchData()
+  }, [])
+  useEffect(() => {
+    console.log(dataUser)
+  }, [dataUser])
   return (
     <>
-      <Navbar />
-      <DataProfile />
+      <div className=" flex flex-row min-h-screen bg-gray-300">
+        <Aside isVisible={isAsideVisible} />
+        <div className="w-full">
+          <NavbarZaky handleVisibleAside={handleVisibleAside} />
+          <DataProfile data={dataUser}/>
+        </div>
+      </div>
+      {/* <ContentDashboard /> */}
+      {/* <div>{dataUser.name}</div> */}
+      {/* <Navbar /> */}
       {/* <div className="2xl:container">
         <div className="container">
         </div>

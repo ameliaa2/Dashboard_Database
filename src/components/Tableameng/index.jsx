@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import { DotsThreeVertical } from "@phosphor-icons/react";
 import {
   Table,
   TableHeader,
@@ -44,51 +43,51 @@ import ActionDropdown from "../DropdownActions";
 // ];
 const columns = [
   {
-    key:"iduser",
-    label:"IDUSER"
+    key: "iduser",
+    label: "IDUSER"
   },
   {
-    key:"name",
-    label:"NAMA"
+    key: "name",
+    label: "NAMA"
   },
   {
-    key:"departemen",
+    key: "departemen",
     label: "DEPARTEMEN"
   },
   {
-    key:"team",
-    label:"TEAM"
+    key: "team",
+    label: "TEAM"
   },
   {
-    key:'license',
-    label:'LICENSE'
+    key: 'license',
+    label: 'LICENSE'
   },
   {
-    key:'category',
-    label:'CATEGORY'
+    key: 'category',
+    label: 'CATEGORY'
   },
   {
-    key:'level',
-    label:'LEVEL'
+    key: 'level',
+    label: 'LEVEL'
   },
   {
-    key:'status',
-    label:'STATUS'
+    key: 'status',
+    label: 'STATUS'
   },
   {
-    key:'issueddate',
-    label:'ISSUED DATE'
+    key: 'issueddate',
+    label: 'ISSUED DATE'
   },
   {
-    key:'expireddate',
-    label:'EXPIRED DATE'
+    key: 'expireddate',
+    label: 'EXPIRED DATE'
   },
   {
     key: "action",
     label: "ACTION",
   }
 ];
-const Tableameng=({data})=> {
+const Tableameng = ({ data }) => {
   const rows = data
   console.log('ini rows ', rows)
   const [selectedUser, setSelectedUser] = useState(null);
@@ -112,7 +111,7 @@ const Tableameng=({data})=> {
               {(columnKey) => (
                 <TableCell>
                   {columnKey === "action" ? (
-                    <ActionDropdown/>
+                    <ActionDropdown iduser={item.iduser}/>
                   ) : (
                     getKeyValue(item, columnKey)
                   )}
@@ -122,15 +121,15 @@ const Tableameng=({data})=> {
           )}
         </TableBody>
       </Table>
-      </>
-      // {selectedUser && (
-      //   <div style={{ marginTop: '20px' }}>
-      //     <h2>Profile Details</h2>
-      //     <p><strong>Name:</strong> {selectedUser.name}</p>
-      //     <p><strong>Role:</strong> {selectedUser.role}</p>
-      //     <p><strong>Status:</strong> {selectedUser.status}</p>
-      //   </div>
-      // )}
+    </>
+    // {selectedUser && (
+    //   <div style={{ marginTop: '20px' }}>
+    //     <h2>Profile Details</h2>
+    //     <p><strong>Name:</strong> {selectedUser.name}</p>
+    //     <p><strong>Role:</strong> {selectedUser.role}</p>
+    //     <p><strong>Status:</strong> {selectedUser.status}</p>
+    //   </div>
+    // )}
   );
 }
 export default Tableameng

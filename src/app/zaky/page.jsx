@@ -1,8 +1,7 @@
+import AddData from "@/components/AddData"
 const PageZaky = () => (
-  // <PDFViewer>
-  // </PDFViewer>
-    <MyDocument />
+  <>
+    <AddData />
+  </>
 );
-
-ReactPDF.render(<MyDocument />, `./Ijazah-FathuddienArief.pdf`);
 export default PageZaky

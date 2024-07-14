@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { DotsThreeVertical } from "@phosphor-icons/react";
-export default function ActionDropdown() {
+export default function ActionDropdown({iduser}) {
   // const [selectedValue, setSelectedValue] = useState(null)
   const router = useRouter()
   const handleAction = (key) => {
@@ -56,7 +56,7 @@ export default function ActionDropdown() {
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Link Actions">
-        <DropdownItem key="profile" href="/profile/sdafasd">
+        <DropdownItem key="profile" href={`/profile/${iduser}`}>
           View Profile
         </DropdownItem>
         <DropdownItem className="pt-2" key="update" href="/update">

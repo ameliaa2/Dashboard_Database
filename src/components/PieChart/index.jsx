@@ -42,7 +42,7 @@ const PieChart = ({label, value}) => {
         maintainAspectRatio: false, 
         plugins: {
             legend: {
-                position: 'top',
+                position: 'right',
             },
             title: {
                 display: true,
@@ -52,7 +52,7 @@ const PieChart = ({label, value}) => {
     };
 
     return (
-        <div className='max-h-[400px] max-w-[400px] overflow-y-hidden'>
+        <div className='max-h-[400px] w-[600px] overflow-y-hidden'>
             <Pie data={data} options={options} />;
         </div>
     )

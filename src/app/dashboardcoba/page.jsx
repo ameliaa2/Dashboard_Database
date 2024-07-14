@@ -1,41 +1,50 @@
 "use client"
-// import Image from "next/image";
-// import Navbar from "@/components/Navbar";
-// import Footer from "@/components/Footer";
 import Tableameng from "@/components/Tableameng";
-import AddProfil from "@/components/AddProfil"
-import Aside from "@/components/Aside"
-import NavbarZaky from "@/components/NavbarZaky"
+import AddProfil from "@/components/AddProfil";
+import Aside from "@/components/Aside";
+import NavbarZaky from "@/components/NavbarZaky";
 import SearchFilter from "@/components/SearchFilter";
 import { Pagination } from "@nextui-org/react";
-import { useState, useEffect } from "react"
-import { fetchDataNoFilter } from "@/helpers/api";
-import { Search } from "lucide-react";
-
+import { useState, useEffect } from "react";
+import { fetchFilterSearch } from "@/helpers/api";
+import ExportExcel from "@/components/ExportExcel";
 export default function Home() {
+  const [filters, setFilters] = useState({
+    iduser: '',
+    name: '',
+    iddepartemen: '',
+    idteam: '',
+    idlicense: '',
+    issuedyear: '',
+    expiredyear: '',
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1)
+  const [refresh, setRefresh] = useState(false);
   const [dataTable, setDataTable] = useState([]);
-
+  const [exportData, setExportData] = useState([]);
+  const handleRefresh = ()=>{
+    setRefresh(!refresh)
+  }
+  const handleFiltersChange = (newFilters) => {
+    setFilters(newFilters);
+  };
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    console.log('Halaman saat ini:', page);
-    // Anda bisa melakukan sesuatu dengan nilai halaman, seperti memuat data baru.
   };
   useEffect(()=>{
     const fetchData = async()=>{
-      const response = await fetchDataNoFilter(currentPage)
-      // console.log(response)
+      const response = await fetchFilterSearch(currentPage, filters)
+      console.log(response)
       setTotalPages(response.data.totalPage)
       setDataTable(response.data.totalData)
+      setExportData(response.data.dataForExcel)
     }
     fetchData()
-  },[currentPage])
+  },[currentPage, filters, refresh])
   useEffect(()=>{
-    console.log(currentPage)
-    console.log(totalPages)
-    console.log(dataTable)
-  },[currentPage, totalPages, dataTable])
+    console.log(filters)
+  },[filters])
   const [isAsideVisible, setAsideVisible] = useState(false)
   const handleVisibleAside = () => {
     setAsideVisible(true)
@@ -50,9 +59,10 @@ export default function Home() {
         <div className="w-full">
           <NavbarZaky handleVisibleAside={handleVisibleAside} />
           <div className="p-5 flex flex-col gap-y-5">
-            <AddProfil />
-            <SearchFilter />
+            <AddProfil onRefresh={handleRefresh}/>
+            <SearchFilter onFiltersChange={handleFiltersChange}/>
             <div>
+              <ExportExcel excelData={exportData} fileName={'Export Excel'}/>
               <Tableameng data={dataTable}/>
               <div className='w-full flex justify-center py-5'>
                 <Pagination isCompact showControls total={totalPages} initialPage={1} size="lg" onChange={(page)=>{

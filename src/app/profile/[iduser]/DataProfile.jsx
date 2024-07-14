@@ -1,9 +1,10 @@
 "use client"
 import React, { useState } from 'react';
 import Link from "next/link"
-import Modal from 'react-modal';
+import { FileUp } from "lucide-react"
+// import Modal from 'react-modal';
 
-const DataProfile = () => {
+const DataProfile = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isKtpOpen, setIsKtpOpen] = useState(true);
   const [isIjazahOpen, setIsIjazahOpen] = useState(false);
@@ -103,56 +104,115 @@ const DataProfile = () => {
 
 
   return (
-    <div className="w-full flex justify-center min-h-[90vh] py-10 bg-[#A0937D]">
-      <div className="flex flex-row flex-wrap rounded-lg shadow-md w-3/4 gap-x-3 gap-y-3">
-        <div className="data-profile flex flex-col items-center p-6 bg-[#E7D4B5] rounded-lg border-r border-gray-300 lg:w-1/4 md:w-4/4">
-          <div className="photo w-48 h-48 bg-[#B6C7AA] rounded-md flex justify-center items-center mb-2">
+    <div className="w-full flex justify-center min-h-[90vh] py-10">
+      <div className="flex flex-row flex-wrap rounded-lg w-3/4 gap-x-3 gap-y-3">
+        <div className="shadow-md flex flex-col items-center p-6 bg-gray-200 rounded border-r border-gray-300 lg:w-1/4 md:w-4/4">
+          <div className="photo w-48 h-48 bg-[#B6C7AA] rounded flex justify-center items-center mb-2">
             <div className="foto text-lg font-bold">FOTO</div>
           </div>
-          <div className="name text-lg font-bold">Nama</div>
-          <div className="name-id text-lg font-bold">ID</div>
+          <p className="name text-lg font-bold">{data.name}</p>
+          <p className="name-id text-lg font-bold">{data.id}</p>
         </div>
-        <div className="buat-berkas-container flex-grow bg-[#F6E6CB] rounded-lg text-white text-xl font-bold rounded-bl-lg p-6">
-          <div className="flex justify-center mb-4">
+        <div className="shadow-md flex-grow bg-gray-200 rounded text-white text-xl font-bold rounded-bl-lg p-6">
+          <div className="flex justify-start gap-x-1 mb-2">
             <button
-              className="text-base font-semibold leading-7 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mr-4"
-              onClick={() => handleKtpOpen()}
+              className={`font-semibold text-sm ${isKtpOpen ? 'bg-gray-700 px-3' : 'bg-gray-500 px-2'} text-gray-100 p-1 hover:shadow-xl`}
+              onClick={handleKtpOpen}
             >
               KTP
             </button>
             <button
-              className="text-base font-semibold leading-7 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mr-4"
-              onClick={() => handleIjazahOpen()}
+              className={`font-semibold text-sm ${isIjazahOpen ? 'bg-gray-700 px-3' : 'bg-gray-500 px-2'} text-gray-100 p-1 hover:shadow-xl`}
+              onClick={handleIjazahOpen}
             >
               IJAZAH
             </button>
             <button
-              className="text-base font-semibold leading-7 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-              onClick={() => handleLicenseOpen()}
+              className={`font-semibold text-sm ${isLicenseOpen ? 'bg-gray-700 px-3' : 'bg-gray-500 px-2'} text-gray-100 p-1 hover:shadow-xl`}
+              onClick={handleLicenseOpen}
             >
               LISENSI
             </button>
           </div>
-          {isKtpOpen &&
+          {isKtpOpen && (
+            <>
+              {data.pathktp ?
+                (<>
+                  <div classnaame="z-20">
+                    <iframe src="/assets/pdf/ktp/KTP - Fathuddien Arief.pdf" height="400" width="100%" className='rounded' />
+                  </div>
+                </>) : (<>
+                  <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
+                    <label
+                      htmlFor="file"
+                    // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                    >
+                      <div className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
+                        <FileUp size={50} className='text-gray-500' />
+                        <p className='text-center text-gray-500 text-sm'>Upload File</p>
+                      </div>
+                    </label>
+                    <input id="file" type="file" accept=".pdf" className=' hidden' />
+                  </div>
+                </>)
+              }
+            </>
+          )}
+          {isIjazahOpen && (
+            <>
+              {data.pathijazah ?
+                (
+                  <div classnaame="z-20">
+                    <iframe src="/assets/pdf/ijazah/Ijazah-FathuddienArief.pdf" height="400" width="100%" className='rounded' />
+                  </div>
+                ) : (
+                  <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
+                    <label
+                      htmlFor="file"
+                    // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                    >
+                      <div className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
+                        <FileUp size={50} className='text-gray-500' />
+                        <p className='text-center text-gray-500 text-sm'>Upload File</p>
+                      </div>
+                    </label>
+                    <input id="file" type="file" accept=".pdf" className=' hidden' />
+                  </div>
+                )
+              }
+            </>
+          )}
+          {/* {isKtpOpen &&
             <div classnaame="z-20">
-              <iframe src="/assets/pdf/ktp/KTP - Fathuddien Arief.pdf" height="400" width="100%" className='rounded-lg' />
+              <iframe src="/assets/pdf/ktp/KTP - Fathuddien Arief.pdf" height="400" width="100%" className='rounded' />
             </div>
-          }
-          {isIjazahOpen &&
+          } */}
+          {/* {data.ijazah ?
+            (
+              <>
+                {isIjazahOpen &&
+                  <div classnaame="z-20">
+                    <iframe src="/assets/pdf/ijazah/Ijazah-FathuddienArief.pdf" height="400" width="100%" className='rounded' />
+                  </div>
+                }
+              </>
+            ) : (<></>)
+          } */}
+          {/* {isIjazahOpen &&
             <div classnaame="z-20">
-              <iframe src="/assets/pdf/ijazah/Ijazah-FathuddienArief.pdf" height="400" width="100%" className='rounded-lg' />
+              <iframe src="/assets/pdf/ijazah/Ijazah-FathuddienArief.pdf" height="400" width="100%" className='rounded' />
             </div>
-          }
+          } */}
           {isLicenseOpen &&
             <div className='text-black'>
               <ol className='list-decimal'>
                 <li className='flex justify-between'>
-                    <p>Web Developer</p>
+                  <p>Web Developer</p>
                   <Link href="/profile/sadfasd/license">View License</Link>
                 </li>
                 <li className='flex justify-between'>
-                    <p>Mobile Developer</p>
-                    <Link href="/profile/sadfasd/license">View License</Link>
+                  <p>Mobile Developer</p>
+                  <Link href="/profile/sadfasd/license">View License</Link>
                 </li>
               </ol>
             </div>

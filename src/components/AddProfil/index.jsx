@@ -1,10 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import Button from '@nextui-org/react';
-import { XCircle } from 'lucide-react';
-
-
-const AddAdmin = () => {
+// import Button from '@nextui-org/react';
+import { XCircle, FilePlus } from 'lucide-react';
+import AddData from '@/components/AddData';
+const AddAdmin = ({onRefresh}) => {
   const [formData
     , setFormData] = useState({
       ktp: null,
@@ -14,7 +13,6 @@ const AddAdmin = () => {
     });
   const [showMessage, setShowMessage] = useState(false);
   const [responseMessage, setResponseMessage] = useState('')
-
   const [openModal, setOpenModal] = useState(false); // State untuk mengontrol modal
   const handleChange = (e) => {
     setFormData({
@@ -28,6 +26,10 @@ const AddAdmin = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+  const handleUploadFile = ()=>{
+    setOpenModal(false)
+    onRefresh()
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,19 +74,25 @@ const AddAdmin = () => {
   return (
     <div>
       <div className="flex justify-end pr-4">
-        <button onClick={handleOpenModal} className="text-base font-semibold leading-7  bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded">
-          Add New Profile
+        <button onClick={handleOpenModal} className="text-base font-semibold leading-7  bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded flex flex- gap-x-1 hover:shadow-xl">
+          <FilePlus size={24}/>
+          <span>Add Data</span>
         </button>
       </div>
+      {/* className="space-y-4" */}
       {openModal && ( // Tampilkan modal jika openModal true
-        <div className="z-20 min-w-[100vw] fixed top-0 left-0 right-0 min-h-screen flex items-center justify-center  bg-gray-500/30 backdrop-blur-md">
+        <div className="z-30 min-w-[100vw] fixed top-0 left-0 right-0 min-h-screen flex items-center justify-center  bg-gray-500/30 backdrop-blur-md">
           <div className="addprofil-form bg-white p-6 rounded-lg shadow-xl">
-            <div className="flex justify-end">
+            <div className="flex justify-between mb-3">
+              <div className='font-semibold text-xl'>
+                <h1>Add data from Excel</h1>
+              </div>
               <button onClick={handleCloseModal}>
                 <XCircle size={24} className='text-gray-500' />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <AddData uploadDone={handleUploadFile}/>
+            {/* <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="ktp" className="block text-sm font-medium leading-6 text-gray-700">KTP (.pdf):</label>
                 <input type="file" id="ktp" name="ktp" accept=".pdf" onChange={handleChange} />
@@ -102,7 +110,7 @@ const AddAdmin = () => {
                 <input type="file" id="lisensi" name="lisensi" accept=" .pdf" onChange={handleChange} />
               </div>
               <button className="bg-indigo-500 hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium text-white" type="submit">Submit</button>
-            </form>
+            </form> */}
             {showMessage && <p>{responseMessage}</p>}
           </div>
         </div>
