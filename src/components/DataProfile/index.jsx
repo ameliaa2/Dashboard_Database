@@ -110,7 +110,7 @@ const DataProfile = ({ data }) => {
                     <div className="photo w-48 h-48 bg-[#B6C7AA] rounded flex justify-center items-center mb-2">
                         <div className="foto text-lg font-bold">FOTO</div>
                     </div>
-                    <p className="name text-lg font-bold">{data.name}</p>
+                    <p className="name text-lg text-center font-bold">{data.name}</p>
                     <p className="name-id text-lg font-bold">{data.id}</p>
                 </div>
                 <div className="shadow-md flex-grow bg-gray-200 rounded text-white text-xl font-bold rounded-bl-lg p-6">
