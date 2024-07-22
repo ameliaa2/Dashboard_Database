@@ -233,6 +233,29 @@ export const insertData = async (data) => {
         console.log(error)
     }
 }
+// export const getDetailUser = async (data) => {
+//     try {
+//         const dataRequest = {
+//             iduser:data
+//         }
+//         console.log('ini data request insert data',dataRequest)
+//         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/get`, {
+//             method: 'POST', // Metode request
+//             headers: {
+//                 'Content-Type': 'application/json' // Header untuk mengirimkan data dalam format JSON
+//             },
+//             body: JSON.stringify(dataRequest) // Mengubah data menjadi string JSON
+//         })
+//         if (response.ok) {
+//             const data = await response.json()
+//             console.log('ini response API',data)
+//             return data.data
+//         }
+//     }
+//     catch (error) {
+//         console.log(error)
+//     }
+// }
 export const getDetailUser = async (data) => {
     try {
         const dataRequest = {
@@ -240,6 +263,54 @@ export const getDetailUser = async (data) => {
         }
         console.log('ini data request insert data',dataRequest)
         const response = await fetch('http://localhost:5000/profile/get', {
+            method: 'POST', // Metode request
+            headers: {
+                'Content-Type': 'application/json' // Header untuk mengirimkan data dalam format JSON
+            },
+            body: JSON.stringify(dataRequest) // Mengubah data menjadi string JSON
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log('ini response API',data)
+            return data.data
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+export const uploadKtp = async (iduser, pathktp) => {
+    try {
+        const dataRequest = {
+            iduser:iduser,
+            pathktp:pathktp
+        }
+        console.log('ini data request insert data',dataRequest)
+        const response = await fetch('http://localhost:5000/profile/uploadKtp', {
+            method: 'POST', // Metode request
+            headers: {
+                'Content-Type': 'application/json' // Header untuk mengirimkan data dalam format JSON
+            },
+            body: JSON.stringify(dataRequest) // Mengubah data menjadi string JSON
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log('ini response API',data)
+            return data.data
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+export const uploadIjazah = async (iduser, pathijazah) => {
+    try {
+        const dataRequest = {
+            iduser:iduser,
+            pathijazah:pathijazah
+        }
+        console.log('ini data request insert data',dataRequest)
+        const response = await fetch('http://localhost:5000/profile/uploadIjazah', {
             method: 'POST', // Metode request
             headers: {
                 'Content-Type': 'application/json' // Header untuk mengirimkan data dalam format JSON
