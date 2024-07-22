@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link"
 import { FileUp } from "lucide-react"
+import ItemLicense from "@/components/ItemLicense"
 import { uploadKtp, uploadIjazah } from '@/helpers/api';
 // import Modal from 'react-modal';
 
@@ -94,6 +95,11 @@ const DataProfile = ({ data }) => {
             console.log(result);
         }
     }
+    const [showModal, setShowModal] = useState(false);
+
+    const handleModalToggle = () => {
+      setShowModal(!showModal);
+    };
 
     return (
         <div className="w-full flex justify-center min-h-[90vh] py-10">
@@ -205,22 +211,15 @@ const DataProfile = ({ data }) => {
                         <>
                             {dataUser.license.length >= 0 ? (
                                 <div className='text-black'>
-                                    <ol className='list-decimal'>
+                                    <ItemLicense/>
+                                    {/* <ol className='list-decimal'>
                                         {dataUserLicense.map((license, index) => (
                                             <li key={index} className='flex justify-between'>
                                                 <p>{license.name}</p>
                                                 <Link href={`/profile/${dataUser.id}/license`}>View License</Link>
                                             </li>
                                         ))}
-                                        {/* <li className='flex justify-between'>
-                                        <p>{dataUser.license[0].name}</p>
-                                        <Link href="/profile/sadfasd/license">View License</Link>
-                                    </li> */}
-                                        {/* <li className='flex justify-between'>
-                                        <p>Mobile Developer</p>
-                                        <Link href="/profile/sadfasd/license">View License</Link>
-                                    </li> */}
-                                    </ol>
+                                    </ol> */}
                                 </div>
                             ) : (
                                 <>NO DATA</>
@@ -256,6 +255,48 @@ const DataProfile = ({ data }) => {
                             </div>
                         </div>
                     )}
+                    <div className="flex justify-center items-center h-screen">
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={handleModalToggle}
+      >
+        Lihat Lisensi
+      </button>
+
+      {showModal && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl">
+              <div className="flex justify-end p-4">
+                <button
+                  className="text-gray-500 hover:text-gray-700"
+                  onClick={handleModalToggle}
+                >
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="h-[600px]">
+                <iframe
+                  src="/lisensi.pdf"
+                  className="w-full h-full"
+                  frameBorder="0"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
                 </div>
             </div>
         </div>
