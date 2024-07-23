@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import Link from "next/link"
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:3153789399.
 import UpdateFile from '@/components/UpdateFile'
 import Navbar from '@/components/Navbar'

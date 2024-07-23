@@ -1,19 +1,19 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Link from "next/link"
-import { FileUp } from "lucide-react"
+import { FileUp, UserRound, Pencil } from "lucide-react"
 import ItemLicense from "@/components/ItemLicense"
 import { uploadKtp, uploadIjazah } from '@/helpers/api';
-import { UserRound } from 'lucide-react';
 // import Modal from 'react-modal';
 
-const DataProfile = ({ data }) => {
+const UpdateProfile = ({ data }) => {
     console.log('ini data dari page', data)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isKtpOpen, setIsKtpOpen] = useState(true);
     const [isIjazahOpen, setIsIjazahOpen] = useState(false);
     const [isLicenseOpen, setIsLicenseOpen] = useState(false);
     const [dataUserLicense, setDataUserLicense] = useState(null);
+    const [isAvatar, setIsAvatar] = useState(false);
     // const [fileName, setFileName] = useState(null);
     const [dataUser, setDataUser] = useState({});
     useEffect(() => {
@@ -66,6 +66,7 @@ const DataProfile = ({ data }) => {
         if (response.ok) {
             const result = await response.text();
             const pathktp = `/assets/pdf/ktp/${formattedName}`
+            console.log('ini upload kjfjgso;idhjg', dataUser)
             const responseKtp = await uploadKtp(dataUser.id, pathktp)
             if (responseKtp) {
                 setDataUser(responseKtp)
@@ -106,11 +107,29 @@ const DataProfile = ({ data }) => {
         <div className="w-full flex justify-center min-h-[90vh] py-10">
             <div className="flex flex-row flex-wrap rounded-lg w-3/4 gap-x-3 gap-y-3">
                 <div className="shadow-md flex flex-col items-center p-6 bg-gray-200 rounded border-r border-gray-300 lg:w-1/4 md:w-4/4">
-                    <div className="photo w-48 h-48 bg-gray-500 rounded flex justify-center items-end mb-2">
+                    <div
+                        onMouseEnter={() => setIsAvatar(true)}
+                        onMouseLeave={() => setIsAvatar(false)}
+                        className="relative w-48 h-48 bg-gray-500 rounded-lg flex justify-center items-end mb-2">
                         {/* <div className="foto text-lg font-bold">FOTO</div> */}
-                        <UserRound size={176} className='text-gray-200'/>
+                        <UserRound size={176} className={`${isAvatar ? 'tex-gray-300' : 'text-gray-200'}`} />
+                        {isAvatar &&
+                            <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
+                                <label
+                                    htmlFor="file"
+                                    onClick={() => document.getElementById('file').click()}
+                                // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                                >
+                                    <button className='absolute top-0 left-0 w-48 h-48 bg-gray-400/50 flex items-center justify-center text-gray-200'>
+                                        <Pencil size={32} />
+                                    </button>
+                                </label>
+                                <input id="file" type="file" accept=".pdf" className=' hidden'
+                                    onChange={(e) => { handleUploadFileIjazah(e.target) }} />
+                            </div>
+                        }
                     </div>
-                    <p className="name text-lg font-bold">{dataUser.name}</p>
+                    <p className="name text-lg text-center font-bold">{dataUser.name}</p>
                     <p className="name-id text-lg text-center font-bold">{dataUser.id}</p>
                 </div>
                 <div className="shadow-md flex-grow bg-gray-200 rounded text-white text-xl font-bold rounded-bl-lg p-6">
@@ -138,13 +157,40 @@ const DataProfile = ({ data }) => {
                         <>
                             {dataUser.pathktp && dataUser.pathktp !== "" ?
                                 (<>
+                                    <div className='flex flex-row items-center justify-end mb-3'>
+                                        <label
+                                            htmlFor="file"
+                                            onClick={() => document.getElementById('file').click()}
+                                        // onClick={(e)=>{handleUploadFileKtp(e.target)}}
+                                        // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                                        >
+                                            <div className='w-[150px] flex flex-row items-center justify-center hover:cursor-pointer bg-primary-500 gap-2 p-2 rounded-lg'>
+                                                <FileUp className='text-white' />
+                                                <p className='text-center text-white text-sm'>Update File</p>
+                                            </div>
+                                        </label>
+                                        <input id="file" type="file" accept=".pdf" className=' hidden'
+                                            onChange={(e) => { handleUploadFileKtp(e.target) }} />
+                                    </div>
                                     <div classnaame="z-20">
                                         <iframe src={dataUser.pathktp} height="400" width="100%" className='rounded' />
                                         {/* <iframe src="/assets/pdf/ktp/KTP - Fathuddien Arief.pdf" height="400" width="100%" className='rounded' /> */}
                                     </div>
                                 </>) : (<>
-                                    <div className='w-full h-[90%] flex items-center justify-center'>
-                                        <h3 className='font-xl font-bold text-gray-500' >NO DATA</h3>
+                                    <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
+                                        <label
+                                            htmlFor="file"
+                                            onClick={() => document.getElementById('file').click()}
+                                        // onClick={(e)=>{handleUploadFileKtp(e.target)}}
+                                        // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                                        >
+                                            <button className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
+                                                <FileUp size={50} className='text-gray-500' />
+                                                <p className='text-center text-gray-500 text-sm'>Upload File</p>
+                                            </button>
+                                        </label>
+                                        <input id="file" type="file" accept=".pdf" className=' hidden'
+                                            onChange={(e) => { handleUploadFileKtp(e.target) }} />
                                     </div>
                                 </>)
                             }
@@ -154,12 +200,40 @@ const DataProfile = ({ data }) => {
                         <>
                             {dataUser.pathijazah ?
                                 (
-                                    <div classnaame="z-20">
-                                        <iframe src={dataUser.pathijazah} height="400" width="100%" className='rounded' />
-                                    </div>
+                                    <>
+                                        <div className='flex justify-end rounded-lg mb-3'>
+                                            <label
+                                                htmlFor="file"
+                                                onClick={() => document.getElementById('file').click()}
+                                            // onClick={(e)=>{handleUploadFileKtp(e.target)}}
+                                            // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                                            >
+                                                <div className='flex flex-row text-sm rounded-lg items-center gap-1 p-2 hover:cursor-pointer bg-primary-500'>
+                                                    <FileUp className='text-white' />
+                                                    <p className='text-center text-white'>Update File</p>
+                                                </div>
+                                            </label>
+                                            <input id="file" type="file" accept=".pdf" className=' hidden'
+                                                onChange={(e) => { handleUploadFileKtp(e.target) }} />
+                                        </div>
+                                        <div classnaame="z-20">
+                                            <iframe src={dataUser.pathijazah} height="400" width="100%" className='rounded' />
+                                        </div>
+                                    </>
                                 ) : (
-                                    <div className='w-full h-[90%] flex items-center justify-center'>
-                                        <h3 className='font-xl font-bold text-gray-500' >NO DATA</h3>
+                                    <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
+                                        <label
+                                            htmlFor="file"
+                                            onClick={() => document.getElementById('file').click()}
+                                        // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
+                                        >
+                                            <button className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
+                                                <FileUp size={50} className='text-gray-500' />
+                                                <p className='text-center text-gray-500 text-sm'>Upload File</p>
+                                            </button>
+                                        </label>
+                                        <input id="file" type="file" accept=".pdf" className=' hidden'
+                                            onChange={(e) => { handleUploadFileIjazah(e.target) }} />
                                     </div>
                                 )
                             }
@@ -195,7 +269,7 @@ const DataProfile = ({ data }) => {
                                         //     <p>{license.name}</p>
                                         //     <Link href={`/profile/${dataUser.id}/license`}>View License</Link>
                                         // </li>
-                                        <ItemLicense license={license} key={index} type={'profile'} />
+                                        <ItemLicense license={license} key={index} type={'update'} />
                                     ))}
                                     {/* <ol className='list-decimal'>
                                         {dataUserLicense.map((license, index) => (
@@ -207,9 +281,7 @@ const DataProfile = ({ data }) => {
                                     </ol> */}
                                 </div>
                             ) : (
-                                <div className='w-full h-[90%] flex items-center justify-center'>
-                                    <h3 className='font-xl font-bold text-gray-500' >NO DATA</h3>
-                                </div>
+                                <>NO DATA</>
                             )}
                         </>
                     )}
@@ -290,7 +362,7 @@ const DataProfile = ({ data }) => {
     );
 };
 
-export default DataProfile;
+export default UpdateProfile;
 {/* <Modal
             isOpen={isModalOpen}
             onRequestClose={handleCloseModal}
