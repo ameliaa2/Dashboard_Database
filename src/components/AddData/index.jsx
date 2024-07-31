@@ -29,7 +29,7 @@ const AddData = ({uploadDone}) => {
       const worksheet = workbook.Sheets[worksheetName];
       const data = XLSX.utils.sheet_to_json(worksheet);
       // setExcelData(data);
-      setExcelData(data.slice(0, 25));
+      setExcelData(data);
     }
   }
   const validateDepartemenTeamLicense = async (dataForCreateDepartemen, dataForCreateTeam, dataForCreateLicense)=>{

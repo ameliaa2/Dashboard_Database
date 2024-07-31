@@ -269,7 +269,7 @@ const UpdateProfile = ({ data }) => {
                                         //     <p>{license.name}</p>
                                         //     <Link href={`/profile/${dataUser.id}/license`}>View License</Link>
                                         // </li>
-                                        <ItemLicense license={license} key={index} type={'update'} />
+                                        <ItemLicense userData={dataUser} license={license} key={index} type={'update'} />
                                     ))}
                                     {/* <ol className='list-decimal'>
                                         {dataUserLicense.map((license, index) => (

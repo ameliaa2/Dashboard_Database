@@ -327,3 +327,29 @@ export const uploadIjazah = async (iduser, pathijazah) => {
         console.log(error)
     }
 }
+export const uploadLicenseDB = async (iduser,nameLicense,editName, pathlicense) => {
+    try {
+        const dataRequest = {
+            iduser:iduser,
+            nameLicense:nameLicense,
+            editName:editName,
+            pathlicense:pathlicense
+        }
+        console.log('ini data request insert data',dataRequest)
+        const response = await fetch('http://localhost:5000/update/license', {
+            method: 'PUT', // Metode request
+            headers: {
+                'Content-Type': 'application/json' // Header untuk mengirimkan data dalam format JSON
+            },
+            body: JSON.stringify(dataRequest) // Mengubah data menjadi string JSON
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log('ini response API',data)
+            return data.data
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
