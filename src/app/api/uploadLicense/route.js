@@ -13,7 +13,8 @@ export const POST=async(request)=>{
         const getFileName = file.name
         const excludeExtension = getFileName.split('.')
         const date = new Date()
-        const formattedName = `${excludeExtension[0]}_${date.getFullYear()}-${date.getMonth()}-${date.getDay()}.pdf`
+        // const formattedName = `${excludeExtension[0]}_${date.getFullYear()}-${date.getMonth()}-${date.getDay()}.pdf`
+        const formattedName = `${excludeExtension[0]}.pdf`;
         const filePath = `./public/assets/pdf/lisensi/${formattedName}`;
         await pump(file.stream(), fs.createWriteStream(filePath));
         return NextResponse.json({status:"success",data:file.size})

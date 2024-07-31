@@ -43,7 +43,8 @@ const ItemLicense = ({ userData, license, type }) => {
         const getFileName = file.name;
         const excludeExtension = getFileName.split('.');
         const date = new Date();
-        const formattedName = `${excludeExtension[0]}_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.pdf`;
+        // const formattedName = `${excludeExtension[0]}_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.pdf`;
+                const formattedName = `${excludeExtension[0]}.pdf`;
 
         var requestOptions = { method: 'POST', body: formdata };
 
@@ -55,7 +56,6 @@ const ItemLicense = ({ userData, license, type }) => {
             if (responseLicense) {
                 setDataUser(responseLicense);
                 console.log('Response license: ', responseLicense);
-                window.location.reload()
             }
             console.log(result);
         }
@@ -83,14 +83,14 @@ const ItemLicense = ({ userData, license, type }) => {
 
     return (
         <>
-            {type === 'profile' &&
+            {/* {type === 'profile' &&
                 <div className="w-full flex flex-row justify-between">
                     <p>{license.name}</p>
                     <button onClick={openLicense}>
                         {isOpenLicense ? (<ChevronUp />) : (<ChevronDown />)}
                     </button>
                 </div >
-            }
+            } */}
 
             {type === 'update' &&
                 <div className="w-full flex flex-row items-center justify-between">
