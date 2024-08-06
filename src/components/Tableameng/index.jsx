@@ -63,6 +63,10 @@ const columns = [
     label: 'LICENSE'
   },
   {
+    key: 'certificationCategory',
+    label: 'CERTIFICATION CATEGORY'
+  },
+  {
     key: 'category',
     label: 'CATEGORY'
   },
@@ -75,12 +79,20 @@ const columns = [
     label: 'STATUS'
   },
   {
+    key: 'institusi',
+    label: 'INSTITUSI'
+  },
+  {
     key: 'issueddate',
     label: 'ISSUED DATE'
   },
   {
     key: 'expireddate',
     label: 'EXPIRED DATE'
+  },
+  {
+    key: 'remark',
+    label: 'REMARKS'
   },
   {
     key: "action",

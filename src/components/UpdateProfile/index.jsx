@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Link from "next/link"
 import { FileUp, UserRound, Pencil } from "lucide-react"
 import ItemLicense from "@/components/ItemLicense"
-import { uploadKtp, uploadIjazah } from '@/helpers/api';
+import { uploadKtp, uploadIjazah, uploadFoto } from '@/helpers/api';
 // import Modal from 'react-modal';
 
-const UpdateProfile = ({ data }) => {
+const UpdateProfile = ({ data, updateUserData }) => {
     console.log('ini data dari page', data)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isKtpOpen, setIsKtpOpen] = useState(true);
@@ -52,6 +52,29 @@ const UpdateProfile = ({ data }) => {
             console.error('No document selected to open.'); // Handle no selected document
         }
     };
+    const handleUploadFileFoto = async (fileInput) => {
+        var formdata = new FormData();
+        formdata.append("files", fileInput.files[0]);
+        console.log('ini form data ', fileInput.files[0])
+        const getFileName = fileInput.files[0].name
+        const excludeExtension = getFileName.split('.')
+        const date = new Date()
+        const formattedName = `${excludeExtension[0]}.pdf`
+        // setFileName(formattedName)
+        var requestOptions = { method: 'POST', body: formdata };
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/updateFoto`, requestOptions);
+        if (response.ok) {
+            const result = await response.text();
+            const pathktp = `/assets/pdf/foto/${formattedName}`
+            console.log('ini upload fotoUser', dataUser)
+            const responseFoto = await uploadFoto(dataUser.id, pathktp)
+            if (responseFoto) {
+                setDataUser(responseFoto)
+                console.log('ini response ktp ', responseFoto)
+            }
+            console.log(result);
+        }
+    }
     const handleUploadFileKtp = async (fileInput) => {
         var formdata = new FormData();
         formdata.append("files", fileInput.files[0]);
@@ -112,7 +135,11 @@ const UpdateProfile = ({ data }) => {
                         onMouseLeave={() => setIsAvatar(false)}
                         className="relative w-48 h-48 bg-gray-500 rounded-lg flex justify-center items-end mb-2">
                         {/* <div className="foto text-lg font-bold">FOTO</div> */}
-                        <UserRound size={176} className={`${isAvatar ? 'tex-gray-300' : 'text-gray-200'}`} />
+                        {dataUser.pathphoto?(
+                            <iframe src={`${dataUser.pathphoto}`} width={'100%'} height={192}/>
+                        ):(
+                            <UserRound size={176} className={`${isAvatar ? 'tex-gray-300' : 'text-gray-200'}`}/>
+                        )}
                         {isAvatar &&
                             <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
                                 <label
@@ -125,7 +152,7 @@ const UpdateProfile = ({ data }) => {
                                     </button>
                                 </label>
                                 <input id="file" type="file" accept=".pdf" className=' hidden'
-                                    onChange={(e) => { handleUploadFileIjazah(e.target) }} />
+                                    onChange={(e) => { handleUploadFileFoto(e.target) }} />
                             </div>
                         }
                     </div>
@@ -160,9 +187,6 @@ const UpdateProfile = ({ data }) => {
                                     <div className='flex flex-row items-center justify-end mb-3'>
                                         <label
                                             htmlFor="file"
-                                            onClick={() => document.getElementById('file').click()}
-                                        // onClick={(e)=>{handleUploadFileKtp(e.target)}}
-                                        // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
                                         >
                                             <div className='w-[150px] flex flex-row items-center justify-center hover:cursor-pointer bg-primary-500 gap-2 p-2 rounded-lg'>
                                                 <FileUp className='text-white' />
@@ -174,15 +198,11 @@ const UpdateProfile = ({ data }) => {
                                     </div>
                                     <div classnaame="z-20">
                                         <iframe src={dataUser.pathktp} height="400" width="100%" className='rounded' />
-                                        {/* <iframe src="/assets/pdf/ktp/KTP - Fathuddien Arief.pdf" height="400" width="100%" className='rounded' /> */}
                                     </div>
                                 </>) : (<>
                                     <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
                                         <label
                                             htmlFor="file"
-                                            onClick={() => document.getElementById('file').click()}
-                                        // onClick={(e)=>{handleUploadFileKtp(e.target)}}
-                                        // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
                                         >
                                             <button className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
                                                 <FileUp size={50} className='text-gray-500' />
@@ -204,7 +224,6 @@ const UpdateProfile = ({ data }) => {
                                         <div className='flex justify-end rounded-lg mb-3'>
                                             <label
                                                 htmlFor="file"
-                                                onClick={() => document.getElementById('file').click()}
                                             // onClick={(e)=>{handleUploadFileKtp(e.target)}}
                                             // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
                                             >
@@ -214,7 +233,7 @@ const UpdateProfile = ({ data }) => {
                                                 </div>
                                             </label>
                                             <input id="file" type="file" accept=".pdf" className=' hidden'
-                                                onChange={(e) => { handleUploadFileKtp(e.target) }} />
+                                                onChange={(e) => { handleUploadFileIjazah(e.target) }} />
                                         </div>
                                         <div classnaame="z-20">
                                             <iframe src={dataUser.pathijazah} height="400" width="100%" className='rounded' />
@@ -224,7 +243,6 @@ const UpdateProfile = ({ data }) => {
                                     <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
                                         <label
                                             htmlFor="file"
-                                            onClick={() => document.getElementById('file').click()}
                                         // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
                                         >
                                             <button className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
@@ -262,43 +280,17 @@ const UpdateProfile = ({ data }) => {
           } */}
                     {isLicenseOpen && (
                         <>
-                            {dataUser.license.length >= 0 ? (
+                            {dataUserLicense.length >= 0 ? (
                                 <div className='text-black'>
                                     {dataUserLicense.map((license, index) => (
-                                        // <li key={index} className='flex justify-between'>
-                                        //     <p>{license.name}</p>
-                                        //     <Link href={`/profile/${dataUser.id}/license`}>View License</Link>
-                                        // </li>
-                                        <ItemLicense userData={dataUser} license={license} key={index} type={'update'} />
+                                        <ItemLicense updateuserData={updateUserData} userData={dataUser} license={license} key={index} type={'update'} />
                                     ))}
-                                    {/* <ol className='list-decimal'>
-                                        {dataUserLicense.map((license, index) => (
-                                            <li key={index} className='flex justify-between'>
-                                                <p>{license.name}</p>
-                                                <Link href={`/profile/${dataUser.id}/license`}>View License</Link>
-                                            </li>
-                                        ))}
-                                    </ol> */}
                                 </div>
                             ) : (
                                 <>NO DATA</>
                             )}
                         </>
                     )}
-                    {/* {isLicenseOpen &&
-                        <div className='text-black'>
-                            <ol className='list-decimal'>
-                                <li className='flex justify-between'>
-                                    <p>Web Developer</p>
-                                    <Link href="/profile/sadfasd/license">View License</Link>
-                                </li>
-                                <li className='flex justify-between'>
-                                    <p>Mobile Developer</p>
-                                    <Link href="/profile/sadfasd/license">View License</Link>
-                                </li>
-                            </ol>
-                        </div>
-                    } */}
                     {isModalOpen && selectedDoc && ( // Only render modal if open and document is selected
                         <div className="modal">
                             <div className="modal-content">

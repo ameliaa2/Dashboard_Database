@@ -108,9 +108,14 @@ const DataProfile = ({ data }) => {
                 <div className="shadow-md flex flex-col items-center p-6 bg-gray-200 rounded border-r border-gray-300 lg:w-1/4 md:w-4/4">
                     <div className="photo w-48 h-48 bg-gray-500 rounded flex justify-center items-end mb-2">
                         {/* <div className="foto text-lg font-bold">FOTO</div> */}
-                        <UserRound size={176} className='text-gray-200'/>
+                        {/* <UserRound size={176} className='text-gray-200'/> */}
+                        {dataUser.pathphoto?(
+                            <iframe src={`${dataUser.pathphoto}`} width={'100%'} height='192'/>
+                        ):(
+                            <UserRound size={176} />
+                        )}
                     </div>
-                    <p className="name text-lg font-bold">{dataUser.name}</p>
+                    <p className="name text-lg font-bold text-center">{dataUser.name}</p>
                     <p className="name-id text-lg text-center font-bold">{dataUser.id}</p>
                 </div>
                 <div className="shadow-md flex-grow bg-gray-200 rounded text-white text-xl font-bold rounded-bl-lg p-6">

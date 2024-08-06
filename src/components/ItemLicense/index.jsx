@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalContent, Input, useDisclosure } from "@nextui-org/react";
 import { DotsThreeVertical } from "@phosphor-icons/react";
 import { uploadLicenseDB } from "@/helpers/api";
-const ItemLicense = ({ userData, license, type }) => {
+const ItemLicense = ({ userData, license, type, updateUserData }) => {
     const [isOpenLicense, setIsOpenLicense] = useState(false)
     // const [pathLicense, setPathLicense] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -15,12 +15,15 @@ const ItemLicense = ({ userData, license, type }) => {
     const [dataUser, setDataUser] = useState({})
     const { isOpen, onOpen, onOpenChange, onDelete } = useDisclosure();
     useEffect(() => {
-        setDataUser
+        setDataUser(userData)
     }, [userData])
     const openLicense = () => {
         setIsOpenLicense(!isOpenLicense)
     }
-
+    console.log('ini user idddd', userData)
+    const handleUpdateUserData =async()=>{
+        updateUserData()
+    }
     const openModal = () => {
         setIsModalOpen(true)
     }
@@ -55,12 +58,12 @@ const ItemLicense = ({ userData, license, type }) => {
             const responseLicense = await uploadLicenseDB(dataUser.id, license.name, fileName, pathLicense);
             if (responseLicense) {
                 setDataUser(responseLicense);
+                handleUpdateUserData
                 console.log('Response license: ', responseLicense);
             }
             console.log(result);
         }
-
-        closeModal();
+        onOpenChange()
     }
     // const handleUpdateFile = (event)=>{
     //     const updateDb = async()=>{
@@ -83,14 +86,14 @@ const ItemLicense = ({ userData, license, type }) => {
 
     return (
         <>
-            {/* {type === 'profile' &&
+            {type === 'profile' &&
                 <div className="w-full flex flex-row justify-between">
                     <p>{license.name}</p>
                     <button onClick={openLicense}>
                         {isOpenLicense ? (<ChevronUp />) : (<ChevronDown />)}
                     </button>
                 </div >
-            } */}
+            }
 
             {type === 'update' &&
                 <div className="w-full flex flex-row items-center justify-between">
@@ -114,9 +117,9 @@ const ItemLicense = ({ userData, license, type }) => {
                             <DropdownItem onPress={onOpen}>
                                 Update Document
                             </DropdownItem>
-                            <DropdownItem onPress={onDelete}>
+                            {/* <DropdownItem onPress={onDelete}>
                                 Delete Document
-                            </DropdownItem>
+                            </DropdownItem> */}
                         </DropdownMenu>
                     </Dropdown>
                 </div >

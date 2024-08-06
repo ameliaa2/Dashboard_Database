@@ -20,26 +20,27 @@ import UpdateProfile from '@/components/UpdateProfile';
 import { getDetailUser } from "@/helpers/api";
 
 const Home = () => {
-  // const router = useRouter()
+    // const router = useRouter()
     const cek = usePathname()
     const id = cek.split('/').pop()
+    // setIdUser(id)
+    const fetchData = async () => {
+        const data = await getDetailUser(id)
+        setDataUser(data)
+    }
     // const iduser = searchParams.query 
 
-    const [idUser, setIdUser] = useState('')
+    // const [idUser, setIdUser] = useState('')
     const [dataUser, setDataUser] = useState([])
-    const [isAsideVisible, setAsideVisible]= useState(false)
-    const handleVisibleAside= ()=>{
+    const [isAsideVisible, setAsideVisible] = useState(false)
+
+    const handleVisibleAside = () => {
         setAsideVisible(true)
-        if(isAsideVisible){
-            setAsideVisible(false)            
+        if (isAsideVisible) {
+            setAsideVisible(false)
         }
     }
     useEffect(() => {
-        setIdUser(id)
-        const fetchData = async () => {
-        const data = await getDetailUser(id)
-        setDataUser(data)
-        }
         fetchData()
     }, [])
     useEffect(() => {
@@ -47,17 +48,17 @@ const Home = () => {
     }, [dataUser])
     return (
         <>
-        <div className=" flex flex-row min-h-screen bg-gray-300">
-            <Aside isVisible={isAsideVisible} />
-            <div className="w-full">
-            <NavbarZaky handleVisibleAside={handleVisibleAside} />
-            <UpdateProfile data={dataUser}/>
+            <div className=" flex flex-row min-h-screen bg-gray-300">
+                <Aside isVisible={isAsideVisible} />
+                <div className="w-full">
+                    <NavbarZaky handleVisibleAside={handleVisibleAside} />
+                    <UpdateProfile data={dataUser} updateUserData={fetchData}/>
+                </div>
             </div>
-        </div>
-        {/* <ContentDashboard /> */}
-        {/* <div>{dataUser.name}</div> */}
-        {/* <Navbar /> */}
-        {/* <div className="2xl:container">
+            {/* <ContentDashboard /> */}
+            {/* <div>{dataUser.name}</div> */}
+            {/* <Navbar /> */}
+            {/* <div className="2xl:container">
             <div className="container">
             </div>
             <div className="classnya-container">

@@ -45,8 +45,9 @@ const AddData = ({uploadDone}) => {
     if(excelData !== null){
       let dataForCreateDepartemen = []
       excelData.forEach((item)=>{
-        if(!dataForCreateDepartemen.includes(item.Dept)){
-          dataForCreateDepartemen.push(item.Dept)
+        const dept = item.Dept ? item.Dept : '';
+        if(!dataForCreateDepartemen.includes(dept)){
+          dataForCreateDepartemen.push(dept)
         }        
       })
       let dataForCreateTeam =[] 
@@ -69,6 +70,7 @@ const AddData = ({uploadDone}) => {
       console.log('ini License',dataForCreateLicense)
     }
   }, [excelData])
+  console.log('ini excel data',excelData)
   return (
     <>
       <form action="" onSubmit={handleSubmitFile} className='flex flex-col space-y-4'>

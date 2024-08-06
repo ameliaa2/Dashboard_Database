@@ -279,6 +279,28 @@ export const getDetailUser = async (data) => {
         console.log(error)
     }
 }
+export const uploadFoto = async (iduser, pathphoto) => {
+    try {
+        const dataRequest = {
+            iduser:iduser,
+            pathphoto:pathphoto
+        }
+        const response = await fetch('http://localhost:5000/profile/uploadFoto', {
+            method: 'PUT', // Metode request
+            headers: {
+                'Content-Type': 'application/json' // Header untuk mengirimkan data dalam format JSON
+            },
+            body: JSON.stringify(dataRequest) // Mengubah data menjadi string JSON
+        })
+        if (response.ok) {
+            const data = await response.json()
+            return data.data
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
 export const uploadKtp = async (iduser, pathktp) => {
     try {
         const dataRequest = {

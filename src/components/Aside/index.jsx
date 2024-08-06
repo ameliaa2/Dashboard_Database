@@ -33,14 +33,14 @@ const Aside = ({ isVisible }) => {
                         }
                     </Link>
                 </li>
-                <li >
+                {/* <li >
                     <Link href="/profile" className="p-3 flex flex-row gap-x-2 rounded-md items-center hover:bg-gray-600">
                         <Users size={24} color="white" />
                         {isVisible &&
                             <span className="text-gray-300 hover:text-white w-[10vw]">Users</span>
                         }
                     </Link>
-                </li>
+                </li> */}
                 {/* <li className="p-3 flex flex-row gap-x-2 rounded-md items-center hover:bg-gray-600">
                     <LayoutDashboard size={24} color="white" />
                     {isVisible &&
