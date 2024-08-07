@@ -203,11 +203,12 @@ const UpdateProfile = ({ data, updateUserData }) => {
                                     <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
                                         <label
                                             htmlFor="file"
+                                            // onClick={() => document.getElementById('file').click()}
                                         >
-                                            <button className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
+                                            <div className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
                                                 <FileUp size={50} className='text-gray-500' />
                                                 <p className='text-center text-gray-500 text-sm'>Upload File</p>
-                                            </button>
+                                            </div>
                                         </label>
                                         <input id="file" type="file" accept=".pdf" className=' hidden'
                                             onChange={(e) => { handleUploadFileKtp(e.target) }} />
@@ -243,12 +244,13 @@ const UpdateProfile = ({ data, updateUserData }) => {
                                     <div className='flex flex-col items-center h-full gap-y-1 justify-center'>
                                         <label
                                             htmlFor="file"
+                                            // onClick={() => document.getElementById('file').click()}
                                         // className='rounded-md bg-gray-500 hover:bg-gray-700 w-fit shadow-lg'
                                         >
-                                            <button className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
+                                            <div className='flex flex-col items-center gap-y-1 p-2 hover:cursor-pointer'>
                                                 <FileUp size={50} className='text-gray-500' />
                                                 <p className='text-center text-gray-500 text-sm'>Upload File</p>
-                                            </button>
+                                            </div>
                                         </label>
                                         <input id="file" type="file" accept=".pdf" className=' hidden'
                                             onChange={(e) => { handleUploadFileIjazah(e.target) }} />
@@ -280,7 +282,7 @@ const UpdateProfile = ({ data, updateUserData }) => {
           } */}
                     {isLicenseOpen && (
                         <>
-                            {dataUserLicense.length >= 0 ? (
+                            {dataUserLicense && dataUserLicense.length > 0 ? (
                                 <div className='text-black'>
                                     {dataUserLicense.map((license, index) => (
                                         <ItemLicense updateuserData={updateUserData} userData={dataUser} license={license} key={index} type={'update'} />
