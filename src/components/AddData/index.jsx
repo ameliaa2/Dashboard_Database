@@ -33,9 +33,12 @@ const AddData = ({uploadDone}) => {
     }
   }
   const validateDepartemenTeamLicense = async (dataForCreateDepartemen, dataForCreateTeam, dataForCreateLicense)=>{
-    await validateDepartemen(dataForCreateDepartemen)
-    await validateTeam(dataForCreateTeam)
-    await validateLicense(dataForCreateLicense)
+    const responseDepartemen =await validateDepartemen(dataForCreateDepartemen)
+    const responseTeam=await validateTeam(dataForCreateTeam)
+    const responseLicense=await validateLicense(dataForCreateLicense)
+    if(responseDepartemen && responseTeam && responseLicense){
+      await insertData(excelData)
+    }
   }
   const insertDataFromExcel = async(excelData)=>{
     await insertData(excelData)
@@ -63,7 +66,9 @@ const AddData = ({uploadDone}) => {
         }        
       })
       validateDepartemenTeamLicense(dataForCreateDepartemen, dataForCreateTeam, dataForCreateLicense)
-      insertDataFromExcel(excelData)
+      // if(responseValidate){
+      //   insertDataFromExcel(excelData)
+      // }
       uploadDone()
       console.log('ini Departemen',dataForCreateDepartemen)
       console.log('ini Team',dataForCreateTeam)
